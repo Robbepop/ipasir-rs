@@ -10,7 +10,7 @@ categories = ["science", "api-bindings"]
 keywords   = ["ffi", "sat", "solver", "incremental"]
 description = """Bindings for the IPASIR API to communicate with incremental SAT solvers."""
 
-repository = "https://github.com/robbepop/ipasir"
+repository = "https://github.com/robbepop/ipasir-rs"
 # documentation = "https://docs.rs/stevia"
 
 [dependencies]
