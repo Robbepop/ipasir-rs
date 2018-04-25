@@ -51,6 +51,14 @@ impl Lit {
         Ok(Lit(var as c_int))
     }
 
+    /// Creates a new `Lit` from the given `i32`.
+    /// 
+    /// # Note
+    /// 
+    /// This does not check `var` for validity and
+    /// thus should be used with care.
+    pub unsafe fn new_unchecked(var: i32) -> Lit {
+        Lit(var as c_int)
     /// Converts `self` to a raw C-style `int`.
     pub fn to_raw(self) -> c_int {
         self.0
