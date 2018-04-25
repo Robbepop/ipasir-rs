@@ -112,6 +112,20 @@ pub enum ValResult {
 #[derive(Debug, PartialEq, Eq)]
 pub struct Clause(*mut c_int);
 
+impl Clause {
+    /// Returns the length of the clause.
+    pub fn len(&self) -> usize {
+        let mut len = 0;
+        let mut cur = self.0;
+        while unsafe{ *cur } != 0 {
+            len += 1;
+            cur = unsafe{ cur.offset(1) };
+        }
+        len
+    }
+
+}
+
 impl From<*mut c_int> for Clause {
     fn from(lits: *mut c_int) -> Self {
         Clause(lits)
