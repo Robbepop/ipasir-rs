@@ -11,6 +11,6 @@ keywords   = ["ffi", "sat", "solver", "incremental"]
 description = """Bindings for the IPASIR API to communicate with incremental SAT solvers."""
 
 repository = "https://github.com/robbepop/ipasir-rs"
-# documentation = "https://docs.rs/stevia"
+documentation = "https://docs.rs/ipasir"
 
 [dependencies]
