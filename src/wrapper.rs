@@ -124,6 +124,15 @@ impl Clause {
         len
     }
 
+    /// Returns the i-th literal of this clause.
+    pub fn get(&self, i: usize) -> Option<Lit> {
+        if i >= self.len() {
+            return None
+        }
+        Some(unsafe{
+            Lit::new_unchecked(*self.0.offset(i as isize))
+        })
+    }
 }
 
 impl From<*mut c_int> for Clause {
