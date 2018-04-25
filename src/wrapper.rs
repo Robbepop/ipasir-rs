@@ -164,12 +164,14 @@ impl Solver {
 }
 
 impl Solver {
-    /// Adds the given literal to the current clause or finalizes the current clause.
-    pub fn add<L>(&mut self, lit_or_end: L)
-    where
-        L: Into<LitOrEnd>
-    {
-        unsafe{ ipasir_add(self.raw_mut(), lit_or_end.into().to_raw()) }
+    /// Adds the given literal to the current clause.
+    pub fn add_lit(&mut self, lit: Lit) {
+        unsafe{ ipasir_add(self.raw_mut(), lit.to_raw()) }
+    }
+
+    /// Finalizes the current clause.
+    pub fn finalize_clause(&mut self) {
+        unsafe{ ipasir_add(self.raw_mut(), 0) }
     }
 
     /// Adds the given literal as new assumption.
