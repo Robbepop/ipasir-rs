@@ -38,3 +38,19 @@ additional terms or conditions.
 
 [license-mit-badge]: https://img.shields.io/badge/license-MIT-blue.svg
 [license-apache-badge]: https://img.shields.io/badge/license-APACHE-orange.svg
+
+## Release Notes
+
+### 0.2.0 - 25th April 2018
+
+- Renamed `raw` module to `sys` to better fit with the rest of the ecosystem.
+- `Lit::to_raw` is no longer publicly visible.
+- Removed `LitOrEnd` and `EndOfClause`.
+- Split `Solver::add` API into `Solver::add_lit` and `Solver::finalize_clause`.
+- Add `Clause::len` and `Clause::get` methods.
+- Add `Lit::new_unchecked` constructor.
+- Make `SolveControl` now publicly visible. (Was accidentally private before.)
+
+### 0.1.0 - 24th April 2018
+
+- Initial Release
