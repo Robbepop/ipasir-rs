@@ -38,6 +38,15 @@ pub enum Error {
     InvalidFailedResult(c_int)
 }
 
+/// Represents the sign of a literal.
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
+pub enum Sign {
+    /// Positive polarity.
+    Pos,
+    /// Negative polarity.
+    Neg
+}
+
 impl Lit {
     /// Creates a new `Lit` from the given `i32`.
     /// 
@@ -49,6 +58,14 @@ impl Lit {
             return Err(Error::InvalidLitVal)
         }
         Ok(Lit(var as c_int))
+    }
+
+    /// Returns the sign of this literal.
+    pub fn sign(self) -> Sign {
+        if self.to_raw() < 0 {
+            return Sign::Neg
+        }
+        Sign::Pos
     }
 
     /// Creates a new `Lit` from the given `i32`.

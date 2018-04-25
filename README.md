@@ -53,6 +53,7 @@ additional terms or conditions.
 - Split `Solver::add` API into `Solver::add_lit` and `Solver::finalize_clause`.
 - Add `Clause::len` and `Clause::get` methods.
 - Add `Lit::new_unchecked` constructor.
+- Add `Lit::sign` and `Sign` enum.
 - Make `SolveControl` now publicly visible. (Was accidentally private before.)
 
 ### 0.1.0 - 24th April 2018
