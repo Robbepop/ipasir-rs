@@ -59,37 +59,10 @@ impl Lit {
     /// thus should be used with care.
     pub unsafe fn new_unchecked(var: i32) -> Lit {
         Lit(var as c_int)
+    }
+
     /// Converts `self` to a raw C-style `int`.
-    pub fn to_raw(self) -> c_int {
-        self.0
-    }
-}
-
-/// Represents a literal or the end of a clause.
-#[derive(Debug, Copy, Clone, PartialEq, Eq)]
-pub struct LitOrEnd(c_int);
-
-/// Represents the end of a clause.
-/// 
-/// Use to finalize a clause in `ipasir_add`.
-#[derive(Debug, Copy, Clone, PartialEq, Eq)]
-pub struct EndOfClause;
-
-impl From<EndOfClause> for LitOrEnd {
-    fn from(_: EndOfClause) -> Self {
-        LitOrEnd(0)
-    }
-}
-
-impl From<Lit> for LitOrEnd {
-    fn from(lit: Lit) -> Self {
-        LitOrEnd(lit.to_raw())
-    }
-}
-
-impl LitOrEnd {
-    /// Converts `self` into a C-style `int`.
-    pub fn to_raw(self) -> c_int {
+    pub(crate) fn to_raw(self) -> c_int {
         self.0
     }
 }

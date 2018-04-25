@@ -34,8 +34,6 @@ pub mod callbacks {
 pub use self::wrapper::{
     Solver,
     Lit,
-    EndOfClause,
-    LitOrEnd,
     SolveResult,
     ValResult,
     SolveControl,
