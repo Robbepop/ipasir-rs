@@ -8,7 +8,7 @@ mod wrapper;
 /// The raw IPASIR functions.
 /// 
 /// Prefer using the provided safe API instead.
-pub mod raw {
+pub mod sys {
     pub use super::ipasir::{
         ipasir_signature,
         ipasir_init,
