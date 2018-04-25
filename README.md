@@ -1,5 +1,9 @@
 # IPASIR interface for Rust
 
+|       Docs        |       Crates.io      |
+|:-----------------:|:--------------------:|
+| [![docs][1]][2]   | [![crates][3]][4]    |
+
 ## What it is
 
 IPASIR is a simple C interface to incremental SAT solvers.
@@ -54,3 +58,8 @@ additional terms or conditions.
 ### 0.1.0 - 24th April 2018
 
 - Initial Release
+
+[1]: https://docs.rs/ipasir/badge.svg
+[2]: https://docs.rs/ipasir/
+[3]: https://img.shields.io/crates/v/ipasir.svg
+[4]: https://crates.io/crates/ipasir/
