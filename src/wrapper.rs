@@ -68,6 +68,11 @@ impl Lit {
         Sign::Pos
     }
 
+    /// Returns the variable represented by this literal.
+    pub fn var(self) -> u32 {
+        self.to_raw().abs() as u32
+    }
+
     /// Creates a new `Lit` from the given `i32`.
     /// 
     /// # Note

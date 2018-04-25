@@ -54,6 +54,7 @@ additional terms or conditions.
 - Add `Clause::len` and `Clause::get` methods.
 - Add `Lit::new_unchecked` constructor.
 - Add `Lit::sign` and `Sign` enum.
+- Add `Lit::var` method.
 - Make `SolveControl` now publicly visible. (Was accidentally private before.)
 
 ### 0.1.0 - 24th April 2018
