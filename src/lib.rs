@@ -38,6 +38,7 @@ pub use self::wrapper::{
     LitOrEnd,
     SolveResult,
     ValResult,
+    SolveControl,
     Clause,
     Error,
     Result
