@@ -1,44 +1,35 @@
-/// Rust native FFI for the IPASIR interface for incremental SAT solvers.
-/// 
-/// Manual: http://www.cs.utexas.edu/users/moore/acl2/manuals/current/manual/index-seo.php/IPASIR____IPASIR
+//! Rust native FFI for the IPASIR interface for incremental SAT solvers.
+//! 
+//! Visit the IPASIR manual [here][manual].
+//!
+//! [manual]: http://www.cs.utexas.edu/users/moore/acl2/manuals/current/manual/index-seo.php/IPASIR____IPASIR
 
-mod ipasir;
-mod wrapper;
+#[cfg(feature = "ffi")]
+pub mod ffi;
 
-/// The raw IPASIR functions.
-/// 
-/// Prefer using the provided safe API instead.
-pub mod sys {
-    pub use super::ipasir::{
-        ipasir_signature,
-        ipasir_init,
-        ipasir_release,
-        ipasir_add,
-        ipasir_assume,
-        ipasir_solve,
-        ipasir_val,
-        ipasir_failed,
-        ipasir_set_terminate,
-        ipasir_set_learn
-    };
-}
+mod types;
+mod interface;
 
-/// The forwarding callbacks for IPASIR.
-pub mod callbacks {
-    pub use super::wrapper::{
-        ipasir_set_learn_callback,
-        ipasir_set_terminate_callback
-    };
-}
+#[cfg(test)]
+mod tests;
 
-pub use self::wrapper::{
-    Solver,
-    Lit,
-    Sign,
-    SolveResult,
-    ValResult,
-    SolveControl,
-    Clause,
-    Error,
-    Result
+pub use self::{
+    types::{
+        Sign,
+        Var,
+        Lit,
+        InvalidLitVal,
+        Clause,
+        LitIter,
+    },
+    interface::{
+        SolverErrorKind,
+        SolverError,
+        SolveResponse,
+        Result,
+        ResponseError,
+        LitValue,
+        IpasirSolver,
+        SolveControl,
+    },
 };

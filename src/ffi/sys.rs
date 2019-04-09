@@ -1,8 +1,20 @@
+//! The external IPASIR C API.
+//! 
+//! Prefer using the provided safe API instead.
+
 use std::os::raw::{
     c_char,
     c_int,
     c_void
 };
+
+/// Sealed FFI solver type.
+///
+/// This is used to improve type safety in FFI context.
+/// Read more about this trick [here][opaque-ffi-types].
+///
+/// [opaque-ffi-types]: https://doc.rust-lang.org/nomicon/ffi.html#representing-opaque-structs
+#[repr(C)] pub struct SysSolver { _private: [u8; 0] }
 
 extern "C" {
     /// Return the name and the version of the incremental SAT solving library.
@@ -19,7 +31,7 @@ extern "C" {
     /// 
     /// - Required state: *N/A*
     /// - State after: `INPUT`
-    pub fn ipasir_init() -> *mut c_void;
+    pub fn ipasir_init() -> *mut SysSolver;
 
     /// Release the solver, i.e., all its resources and
     /// allocated memory (runs destructors).
@@ -33,7 +45,7 @@ extern "C" {
     /// 
     /// - Required state: `INPUT` or `SAT` or `UNSAT`
     /// - State after: **undefined**
-    pub fn ipasir_release(solver: *mut c_void);
+    pub fn ipasir_release(solver: *mut SysSolver);
 
     /// Add the given literal into the currently added clause
     /// of finalize the clause with a 0 (zero).
@@ -59,7 +71,7 @@ extern "C" {
     /// 
     /// - Required state: `INPUT` or `SAT` or `UNSAT`
     /// - State after: `INPUT`
-    pub fn ipasir_add(solver: *mut c_void, lit_or_zero: c_int);
+    pub fn ipasir_add(solver: *mut SysSolver, lit_or_zero: c_int);
 
     /// Add an assumption for the next SAT search (the next call
     /// to `ipasir_solve`).
@@ -72,7 +84,7 @@ extern "C" {
     /// 
     /// - Required state: `INPUT` or `SAT` or `UNSAT`
     /// - State after: `INPUT`
-    pub fn ipasir_assume(solver: *mut c_void, lit: c_int);
+    pub fn ipasir_assume(solver: *mut SysSolver, lit: c_int);
 
     /// Solve the formula with specified clauses under the specified assumptions.
     /// 
@@ -89,7 +101,7 @@ extern "C" {
     /// 
     /// - Required state: `INPUT` or `SAT` or `UNSAT`
     /// - State after: `INPUT` or `SAT` or `UNSAT`
-    pub fn ipasir_solve(solver: *mut c_void) -> c_int;
+    pub fn ipasir_solve(solver: *mut SysSolver) -> c_int;
 
     /// Get the truth value of the given literal in the found satisfying assignment.
     /// 
@@ -107,7 +119,7 @@ extern "C" {
     /// 
     /// - Required state: `SAT`
     /// - State after: `SAT`
-    pub fn ipasir_val(solver: *mut c_void, lit: c_int) -> c_int;
+    pub fn ipasir_val(solver: *mut SysSolver, lit: c_int) -> c_int;
 
     /// Check if the given assumption literal was used to prove the
     /// unsatisfiability of the formula under the assumptions
@@ -123,7 +135,7 @@ extern "C" {
     /// 
     /// - Required state: `UNSAT`
     /// - State after: `UNSAT`
-    pub fn ipasir_failed(solver: *mut c_void, lit: c_int) -> c_int;
+    pub fn ipasir_failed(solver: *mut SysSolver, lit: c_int) -> c_int;
 
     /// Set a callback function used to indicate a termination requirement to the solver.
     /// The solver will periodically call this function and check its return value during
@@ -144,13 +156,13 @@ extern "C" {
     ///     function.
     /// 
     /// # States
-    /// 
+    ///
     /// - Required state: `INPUT` or `SAT` or `UNSAT`
     /// - State after: `INPUT` or `SAT` or `UNSAT`
     pub fn ipasir_set_terminate(
-        solver: *mut c_void,
-        state: *mut c_void,
-        terminate: extern fn(state: *mut c_void) -> c_int
+        solver: *mut SysSolver,
+        state: *const c_void,
+        terminate: extern fn(state: *const c_void) -> c_int
     );
 
     /// Set a callback function used to extract learned clauses up to a given length from the solver.
@@ -176,9 +188,9 @@ extern "C" {
     /// - Required state: `INPUT` or `SAT` or `UNSAT`
     /// - State after: `INPUT` or `SAT` or `UNSAT`
     pub fn ipasir_set_learn(
-        solver: *mut c_void,
-        state: *mut c_void,
+        solver: *mut SysSolver,
+        state: *const c_void,
         max_length: c_int,
-        learn: extern fn(state: *mut c_void, clause: *mut c_int)
+        learn: extern fn(state: *const c_void, clause: *const c_int)
     );
 }
