@@ -45,6 +45,12 @@ additional terms or conditions.
 
 ## Release Notes
 
+### 0.3.0 - 10th April 2019
+
+- Major API overhaul
+- `ipasir::ffi::Solver` is now the FFI C targeting solver wrapper for Rust.
+- `IpasirSolver` is the trait to be implemented by Rust IPASIR compatible solvers
+
 ### 0.2.0 - 25th April 2018
 
 - Renamed `raw` module to `sys` to better fit with the rest of the ecosystem.
