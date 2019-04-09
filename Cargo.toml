@@ -1,6 +1,6 @@
 [package]
 name = "ipasir"
-version = "0.2.0"
+version = "0.3.0"
 authors = ["Robbepop <robbepop@web.de>"]
 license = "MIT/Apache-2.0"
 readme  = "README.md"
