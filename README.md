@@ -45,6 +45,10 @@ additional terms or conditions.
 
 ## Release Notes
 
+### 0.3.1 - 12th April 2020
+
+- Implement `Error` and `Display` for the error types of the crate.
+
 ### 0.3.0 - 10th April 2019
 
 - Major API overhaul
