@@ -1,6 +1,8 @@
 use std::{
     os::raw::c_int,
     convert::TryFrom,
+    error::Error,
+    fmt,
     result::Result as StdResult,
 };
 
@@ -33,6 +35,14 @@ pub struct Lit(c_int);
 ///              `-INT_MIN == INT_MIN`.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct InvalidLitVal(pub c_int);
+
+impl fmt::Display for InvalidLitVal {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "invalid literal value {}", self.0)
+    }
+}
+
+impl Error for InvalidLitVal {}
 
 impl TryFrom<c_int> for Lit {
     type Error = InvalidLitVal;

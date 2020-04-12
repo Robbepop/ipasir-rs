@@ -4,6 +4,8 @@ use crate::{
     Clause,
 };
 use std::{
+    error::Error,
+    fmt,
     os::raw::c_int,
     result::Result as StdResult,
 };
@@ -24,6 +26,18 @@ pub enum ResponseError {
     Failed(c_int),
 }
 
+impl fmt::Display for ResponseError {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match self {
+            ResponseError::Solve(invalid) => write!(f, "invalid response {} from solve", invalid),
+            ResponseError::Val(invalid) => write!(f, "invalid response {} from val", invalid),
+            ResponseError::Failed(invalid) => write!(f, "invalid response {} from failed", invalid),
+        }
+    }
+}
+
+impl Error for ResponseError {}
+
 /// A kind of a SAT solver error.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum SolverErrorKind {
@@ -39,12 +53,30 @@ pub enum SolverErrorKind {
     InvalidSolverState,
 }
 
+impl fmt::Display for SolverErrorKind {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match self {
+            SolverErrorKind::Lit(e) => e.fmt(f),
+            SolverErrorKind::Response(e) => e.fmt(f),
+            SolverErrorKind::InvalidSolverState => write!(f, "invalid solver state"),
+        }
+    }
+}
+
 /// An error encountered at some solver calls.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct SolverError {
     /// The kind of the solver error.
     kind: SolverErrorKind,
 }
+
+impl fmt::Display for SolverError {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        self.kind.fmt(f)
+    }
+}
+
+impl Error for SolverError {}
 
 impl SolverError {
     /// Returns the kind of the error.
